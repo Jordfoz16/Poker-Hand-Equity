@@ -3,9 +3,8 @@ cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 
 deck = []
 
-
 def CreateDeck():
-    deck = []
+    deck.clear()
     
     for suitsIndex in suits:
         suitArray = []
@@ -47,11 +46,21 @@ def RemoveCard(card):
 
     deck[GetSuitIndex(card)].pop(CheckCard(card))
 
-    print(deck)
-
 def main():
-     CreateDeck()
-     RemoveCard('D4')
+    CreateDeck()
 
+    ## Entering current hand
+    print('Example: 2 of Hearts = H2 or Jack of Club = CJ')
+    firstCard = input('Enter Your First Card: ')
+    secondCard = input('Enter Your Second Card: ')
+
+    currentHand = []
+
+    currentHand.append(firstCard.capitalize())
+    currentHand.append(secondCard.capitalize())
+
+    ## Remove current hand from the deck
+    for index in currentHand:
+        RemoveCard(index)
 
 main()
