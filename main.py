@@ -1,5 +1,5 @@
 suits = ['S', 'C', 'H', 'D']
-cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+rank = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 
 deck = []
 
@@ -9,13 +9,13 @@ def CreateDeck():
     for suitsIndex in suits:
         suitArray = []
 
-        for cardsIndex in cards:
-            suitArray.append(suitsIndex + cardsIndex)
+        for rankIndex in rank:
+            suitArray.append(rankIndex + suitsIndex)
         
         deck.append(suitArray)
 
-def CheckCard(card):
-    
+def GetRankIndex(card):
+
     cardFound = False
     cardLocation = -1
 
@@ -27,7 +27,8 @@ def CheckCard(card):
     return -1
 
 def GetSuitIndex(card):
-    suit = card[0]
+
+    suit = card[1]
     suitIndex = 0
 
     if suit == 'C':
@@ -39,28 +40,42 @@ def GetSuitIndex(card):
 
     return suitIndex
 
-
 def RemoveCard(card):
     
-    if(CheckCard(card) == -1): return
+    if(GetRankIndex(card) == -1): return
 
-    deck[GetSuitIndex(card)].pop(CheckCard(card))
+    deck[GetSuitIndex(card)].pop(GetRankIndex(card))
+
+
 
 def main():
+
     CreateDeck()
 
     ## Entering current hand
-    print('Example: 2 of Hearts = H2 or Jack of Club = CJ')
-    firstCard = input('Enter Your First Card: ')
-    secondCard = input('Enter Your Second Card: ')
-
+    print('Dealt cards')
+    print('Example: 2 of Hearts = 2H or Jack of Club = JC')
     currentHand = []
 
-    currentHand.append(firstCard.capitalize())
-    currentHand.append(secondCard.capitalize())
+    currentHand.append(input('Enter Your First Card: ').upper())
+    currentHand.append(input('Enter Your Second Card: ').upper())
 
     ## Remove current hand from the deck
     for index in currentHand:
         RemoveCard(index)
+
+    ## Entering the flop cards
+    print('Flop')
+    currentFlop = []
+
+    currentFlop.append(input('Enter the first flop card: ').upper())
+    currentFlop.append(input('Enter the second flop card: ').upper())
+    currentFlop.append(input('Enter the third flop card: ').upper())
+
+    ## Remove the flop cards from the deck
+    for index in currentFlop:
+        RemoveCard(index)
+    
+    
 
 main()
