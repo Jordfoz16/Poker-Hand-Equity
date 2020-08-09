@@ -46,7 +46,39 @@ def RemoveCard(card):
 
     deck[GetSuitIndex(card)].pop(GetRankIndex(card))
 
+def ThreeOfKind(cards):
 
+    hasOut = False
+
+    for targetCard in cards:
+        counter = 0
+        for indexCard in cards:
+            if(targetCard == indexCard): continue
+            
+            targetRank = targetCard[0]
+            indexRank = indexCard[0]
+
+            if(targetRank == indexRank): counter += 1
+    
+        if(counter == 2): hasOut = True
+    
+    return hasOut
+    
+
+def CheckAllOuts(hand, table):
+
+    TotalOuts = 0
+
+    for suitIndex in deck:
+        for rankIndex in suitIndex:
+            cards = []
+            cards.extend(hand)
+            cards.extend(table)
+            cards.append(rankIndex)
+            if(ThreeOfKind(cards)): TotalOuts += 1
+
+    print(TotalOuts)
+            
 
 def main():
 
@@ -76,6 +108,7 @@ def main():
     for index in currentFlop:
         RemoveCard(index)
     
+    CheckAllOuts(currentHand, currentFlop)
     
 
 main()
